@@ -76,6 +76,7 @@ const RecentTours = ({ title = "Our Recent Tours", subtitle = "Take a look at so
                       src={tour.image} 
                       alt={tour.title} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                      onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800&auto=format&fit=crop'; }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
                     {(tour.videoUrl || tour.audioUrl) && (

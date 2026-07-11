@@ -61,6 +61,7 @@ const RecentTourDetails = () => {
               src={activeImage || tour.image} 
               alt={tour.title} 
               className="w-full h-full object-cover transition-all duration-300"
+              onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800&auto=format&fit=crop'; }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent"></div>
             <div className="absolute bottom-10 left-10 right-10">
@@ -90,7 +91,7 @@ const RecentTourDetails = () => {
                     activeImage === img ? 'border-primary scale-105 shadow-lg shadow-primary/20' : 'border-white/5 hover:border-white/25'
                   }`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  <img src={img} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=200&auto=format&fit=crop'; }} />
                 </button>
               ))}
             </div>

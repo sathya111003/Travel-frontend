@@ -16,6 +16,7 @@ const PackageCard = ({ pkg }) => {
           src={pkg.images && pkg.images[0] ? pkg.images[0] : 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop'}
           alt={pkg.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop'; }}
         />
         <div className="absolute top-4 left-4 bg-primary text-background px-3 py-1 rounded-full text-xs font-bold">
           {pkg.category}
