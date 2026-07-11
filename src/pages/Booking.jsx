@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchPackageDetails, createBooking } from '../api/api';
+import { fetchPackageDetails, createBooking, fixMediaUrl } from '../api/api';
 import { Calendar, Users, ArrowRight, CreditCard } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
@@ -130,7 +130,7 @@ const Booking = () => {
                 
                 <div className="flex space-x-4">
                   <div className="w-20 h-20 rounded-xl overflow-hidden shrink-0">
-                    <img src={pkg.images[0]} alt={pkg.title} className="w-full h-full object-cover" />
+                    <img src={fixMediaUrl(pkg.images?.[0]) || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=200&auto=format&fit=crop'} alt={pkg.title} className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h4 className="font-bold line-clamp-1">{pkg.title}</h4>

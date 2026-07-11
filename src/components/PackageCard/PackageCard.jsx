@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Clock, MapPin, Star } from 'lucide-react';
+import { Clock, MapPin, Star, Images } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { fixMediaUrl } from '../../api/api';
 
@@ -26,6 +26,12 @@ const PackageCard = ({ pkg }) => {
           <Star className="w-3 h-3 text-primary fill-primary" />
           <span>4.9</span>
         </div>
+        {pkg.images && pkg.images.length > 1 && (
+          <div className="absolute bottom-4 right-4 bg-background/60 backdrop-blur-md text-text px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1 border border-white/10">
+            <Images size={10} />
+            <span>{pkg.images.length}</span>
+          </div>
+        )}
       </div>
 
       <div className="p-6 space-y-4">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { fetchRecentTours, fixMediaUrl } from '../../api/api';
-import { Clock, Image as ImageIcon, Video, Music } from 'lucide-react';
+import { Clock, Image as ImageIcon, Video, Music, Images } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const RecentTours = ({ title = "Our Recent Tours", subtitle = "Take a look at some of our most recently completed adventures. Real memories from real travelers." }) => {
@@ -79,20 +79,23 @@ const RecentTours = ({ title = "Our Recent Tours", subtitle = "Take a look at so
                       onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800&auto=format&fit=crop'; }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-80"></div>
-                    {(tour.videoUrl || tour.audioUrl) && (
-                      <div className="absolute top-4 right-4 flex gap-2">
-                        {tour.videoUrl && (
-                          <span className="bg-blue-500/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center gap-1.5 border border-white/20">
-                            <Video size={10} /> Video
-                          </span>
-                        )}
-                        {tour.audioUrl && (
-                          <span className="bg-[#F97316]/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center gap-1.5 border border-white/20">
-                            <Music size={10} /> Audio
-                          </span>
-                        )}
-                      </div>
-                    )}
+                    <div className="absolute top-4 right-4 flex gap-2 flex-wrap justify-end">
+                      {((tour.videoUrls && tour.videoUrls.length > 0) || tour.videoUrl) && (
+                        <span className="bg-blue-500/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center gap-1.5 border border-white/20">
+                          <Video size={10} /> {tour.videoUrls?.length > 1 ? `${tour.videoUrls.length} Videos` : 'Video'}
+                        </span>
+                      )}
+                      {tour.audioUrl && (
+                        <span className="bg-[#F97316]/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center gap-1.5 border border-white/20">
+                          <Music size={10} /> Audio
+                        </span>
+                      )}
+                      {tour.images && tour.images.length > 1 && (
+                        <span className="bg-white/20 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center gap-1.5 border border-white/20">
+                          <Images size={10} /> {tour.images.length} Photos
+                        </span>
+                      )}
+                    </div>
                     <div className="absolute bottom-6 left-6">
                       <div className="flex items-center space-x-2 bg-primary/20 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-primary mb-2 border border-primary/20 w-max">
                         <Clock size={12} />
@@ -113,8 +116,8 @@ const RecentTours = ({ title = "Our Recent Tours", subtitle = "Take a look at so
                             <Music size={18} />
                           </button>
                         )}
-                        {tour.videoUrl && (
-                          <button onClick={(e) => { e.stopPropagation(); window.open(fixMediaUrl(tour.videoUrl), '_blank'); }} className="text-primary hover:text-[#F97316] transition-colors" title="Watch Video">
+                        {((tour.videoUrls && tour.videoUrls.length > 0) || tour.videoUrl) && (
+                          <button onClick={(e) => { e.stopPropagation(); window.open(fixMediaUrl(tour.videoUrl || tour.videoUrls[0]), '_blank'); }} className="text-primary hover:text-[#F97316] transition-colors" title="Watch Video">
                             <Video size={18} />
                           </button>
                         )}
