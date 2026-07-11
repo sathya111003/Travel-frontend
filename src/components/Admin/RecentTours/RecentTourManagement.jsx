@@ -269,7 +269,7 @@ const RecentTourManagement = () => {
                 <p className="text-[10px] font-bold text-primary uppercase mt-0.5">{t.days}</p>
                 <p className="text-xs text-white/70 mt-1.5 line-clamp-2">{t.description}</p>
                 <div className="flex gap-1.5 mt-2">
-                  {t.videoUrl && <span className="inline-flex items-center gap-1 text-[9px] font-bold text-blue-400 bg-blue-400/10 px-2 py-0.5 rounded-full"><Video size={8} /> Video</span>}
+                  {((t.videoUrls && t.videoUrls.length > 0) || t.videoUrl) && <span className="inline-flex items-center gap-1 text-[9px] font-bold text-blue-400 bg-blue-400/10 px-2 py-0.5 rounded-full"><Video size={8} /> {t.videoUrls?.length > 1 ? `${t.videoUrls.length} Videos` : 'Video'}</span>}
                   {t.audioUrl && <span className="inline-flex items-center gap-1 text-[9px] font-bold text-accent bg-accent/10 px-2 py-0.5 rounded-full"><Music size={8} /> Audio</span>}
                 </div>
               </div>
