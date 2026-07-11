@@ -108,7 +108,7 @@ const RecentTourDetails = () => {
             </div>
 
             {/* Media Section */}
-            {((tour.videoUrl || (tour.videoUrls && tour.videoUrls.length > 0)) || tour.audioUrl) && (
+            {((tour.videoUrl || (tour.videoUrls && tour.videoUrls.length > 0)) || tour.audioUrl || (tour.audioUrls && tour.audioUrls.length > 0)) && (
               <div className="border-t border-white/10 pt-12 space-y-8">
                 <h3 className="text-2xl font-bold text-white flex items-center space-x-3">
                   <span>Tour Media</span>
@@ -159,22 +159,33 @@ const RecentTourDetails = () => {
                     </div>
                   )}
 
-                  {/* Audio Player */}
-                  {tour.audioUrl && (
+                  {/* Audio Player(s) */}
+                  {(tour.audioUrl || (tour.audioUrls && tour.audioUrls.length > 0)) && (
                     <div className="space-y-4 md:col-span-2">
                       <div className="flex items-center space-x-2 text-[#F97316]">
                         <Music size={20} />
-                        <h4 className="font-bold">Client Audio Review</h4>
+                        <h4 className="font-bold">Client Audio Review{(tour.audioUrls && tour.audioUrls.length > 1) ? 's' : ''}</h4>
                       </div>
-                      <div className="glass p-8 rounded-3xl border border-[#F97316]/20 flex flex-col items-center justify-center space-y-6">
-                        <div className="w-20 h-20 bg-[#F97316]/10 rounded-full flex items-center justify-center">
-                          <Music className="w-10 h-10 text-[#F97316]" />
-                        </div>
-                        <audio 
-                          src={fixMediaUrl(tour.audioUrl)} 
-                          controls 
-                          className="w-full max-w-sm rounded-full"
-                        ></audio>
+                      <div className="space-y-4">
+                        {(tour.audioUrls && tour.audioUrls.length > 0 ? tour.audioUrls : [tour.audioUrl]).map((audioUrl, aIdx) => {
+                          const fixedUrl = fixMediaUrl(audioUrl);
+                          if (!fixedUrl) return null;
+                          return (
+                            <div key={aIdx} className="glass p-8 rounded-3xl border border-[#F97316]/20 flex flex-col items-center justify-center space-y-6">
+                              <div className="w-20 h-20 bg-[#F97316]/10 rounded-full flex items-center justify-center">
+                                <Music className="w-10 h-10 text-[#F97316]" />
+                              </div>
+                              {(tour.audioUrls && tour.audioUrls.length > 1) && (
+                                <p className="text-xs text-white/40">Audio {aIdx + 1}</p>
+                              )}
+                              <audio 
+                                src={fixedUrl} 
+                                controls 
+                                className="w-full max-w-sm rounded-full"
+                              ></audio>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   )}

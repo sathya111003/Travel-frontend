@@ -85,9 +85,9 @@ const RecentTours = ({ title = "Our Recent Tours", subtitle = "Take a look at so
                           <Video size={10} /> {tour.videoUrls?.length > 1 ? `${tour.videoUrls.length} Videos` : 'Video'}
                         </span>
                       )}
-                      {tour.audioUrl && (
+                      {((tour.audioUrls && tour.audioUrls.length > 0) || tour.audioUrl) && (
                         <span className="bg-[#F97316]/90 backdrop-blur-md text-white px-3 py-1.5 rounded-full text-[10px] font-bold flex items-center gap-1.5 border border-white/20">
-                          <Music size={10} /> Audio
+                          <Music size={10} /> {tour.audioUrls?.length > 1 ? `${tour.audioUrls.length} Audios` : 'Audio'}
                         </span>
                       )}
                       {tour.images && tour.images.length > 1 && (
@@ -111,8 +111,8 @@ const RecentTours = ({ title = "Our Recent Tours", subtitle = "Take a look at so
                     <div className="mt-6 pt-6 border-t border-primary/10 flex justify-between items-center">
                       <span className="text-[10px] uppercase font-bold tracking-widest text-text/30">Completed Adventure</span>
                       <div className="flex items-center space-x-3">
-                        {tour.audioUrl && (
-                          <button onClick={(e) => { e.stopPropagation(); window.open(fixMediaUrl(tour.audioUrl), '_blank'); }} className="text-primary hover:text-[#F97316] transition-colors" title="Listen to Audio">
+                        {((tour.audioUrls && tour.audioUrls.length > 0) || tour.audioUrl) && (
+                          <button onClick={(e) => { e.stopPropagation(); window.open(fixMediaUrl(tour.audioUrl || tour.audioUrls[0]), '_blank'); }} className="text-primary hover:text-[#F97316] transition-colors" title="Listen to Audio">
                             <Music size={18} />
                           </button>
                         )}

@@ -76,7 +76,8 @@ const RecentTourManagement = () => {
     description: '',
     videoUrl: '',
     videoUrls: [''],
-    audioUrl: ''
+    audioUrl: '',
+    audioUrls: ['']
   });
 
   const getTours = async () => { try { const { data } = await fetchRecentTours(); setTours(data); } catch (e) { console.error(e); } setLoading(false); };
@@ -94,7 +95,8 @@ const RecentTourManagement = () => {
       description: tour.description,
       videoUrl: tour.videoUrl || '',
       videoUrls: tour.videoUrls && tour.videoUrls.length > 0 ? tour.videoUrls : (tour.videoUrl ? [tour.videoUrl] : ['']),
-      audioUrl: tour.audioUrl || ''
+      audioUrl: tour.audioUrl || '',
+      audioUrls: tour.audioUrls && tour.audioUrls.length > 0 ? tour.audioUrls : (tour.audioUrl ? [tour.audioUrl] : [''])
     });
     setShowAddForm(true);
   };
@@ -109,7 +111,8 @@ const RecentTourManagement = () => {
       description: '',
       videoUrl: '',
       videoUrls: [''],
-      audioUrl: ''
+      audioUrl: '',
+      audioUrls: ['']
     });
     setEditId(null);
     setShowAddForm(false);
@@ -140,6 +143,7 @@ const RecentTourManagement = () => {
     try {
       const cleanedImages = formData.images.filter(img => img.trim() !== '');
       const cleanedVideos = formData.videoUrls.filter(vid => vid.trim() !== '');
+      const cleanedAudios = formData.audioUrls.filter(aud => aud.trim() !== '');
 
       if (cleanedImages.length === 0) {
         alert('Please upload or enter at least one tour image.');
@@ -151,7 +155,9 @@ const RecentTourManagement = () => {
         images: cleanedImages,
         image: cleanedImages[0] || '',
         videoUrls: cleanedVideos,
-        videoUrl: cleanedVideos[0] || ''
+        videoUrl: cleanedVideos[0] || '',
+        audioUrls: cleanedAudios,
+        audioUrl: cleanedAudios[0] || ''
       };
 
       if (editId) {
@@ -235,7 +241,20 @@ const RecentTourManagement = () => {
                 <button type="button" onClick={() => addArrayField('videoUrls')} className="text-xs font-bold text-primary flex items-center gap-1 hover:underline mt-1.5"><Plus size={12} /> Add Video</button>
               </div>
 
-              <MediaUploadWidget label="Tour Audio (Background Sound)" value={formData.audioUrl} onChange={(val) => setFormData({ ...formData, audioUrl: val })} accept="audio/*" icon={Music} color="text-accent" uploadFn={uploadAudio} placeholder="MP3, WAV..." />
+              <div className="space-y-3 bg-white/[0.01] p-4 rounded-xl border border-white/[0.03]">
+                <label className="text-[10px] font-bold text-white/60 uppercase tracking-widest block">Tour Audio (Multiple)</label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {formData.audioUrls.map((aud, idx) => (
+                    <div key={idx} className="relative group">
+                      <MediaUploadWidget label={`Audio ${idx + 1}`} value={aud} onChange={(val) => handleArrayChange('audioUrls', idx, val)} accept="audio/*" icon={Music} color="text-accent" uploadFn={uploadAudio} placeholder="MP3, WAV..." />
+                      {formData.audioUrls.length > 1 && (
+                        <button type="button" onClick={() => removeArrayField('audioUrls', idx)} className="absolute top-0 right-0 text-red-400 p-1 text-xs hover:underline bg-red-400/10 rounded">Remove Audio</button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                <button type="button" onClick={() => addArrayField('audioUrls')} className="text-xs font-bold text-primary flex items-center gap-1 hover:underline mt-1.5"><Plus size={12} /> Add Audio</button>
+              </div>
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-white/60 uppercase tracking-widest">Description</label>
                 <textarea required className={`${inputCls} h-24 resize-none`} placeholder="Tour experience..." value={formData.description} onChange={(e) => setFormData({...formData, description: e.target.value})} />
@@ -270,7 +289,7 @@ const RecentTourManagement = () => {
                 <p className="text-xs text-white/70 mt-1.5 line-clamp-2">{t.description}</p>
                 <div className="flex gap-1.5 mt-2">
                   {((t.videoUrls && t.videoUrls.length > 0) || t.videoUrl) && <span className="inline-flex items-center gap-1 text-[9px] font-bold text-blue-400 bg-blue-400/10 px-2 py-0.5 rounded-full"><Video size={8} /> {t.videoUrls?.length > 1 ? `${t.videoUrls.length} Videos` : 'Video'}</span>}
-                  {t.audioUrl && <span className="inline-flex items-center gap-1 text-[9px] font-bold text-accent bg-accent/10 px-2 py-0.5 rounded-full"><Music size={8} /> Audio</span>}
+                  {((t.audioUrls && t.audioUrls.length > 0) || t.audioUrl) && <span className="inline-flex items-center gap-1 text-[9px] font-bold text-accent bg-accent/10 px-2 py-0.5 rounded-full"><Music size={8} /> {t.audioUrls?.length > 1 ? `${t.audioUrls.length} Audios` : 'Audio'}</span>}
                 </div>
               </div>
             </div>
