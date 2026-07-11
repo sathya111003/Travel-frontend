@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { Plus, Edit, Trash2, Search, MapPin } from 'lucide-react';
 import { fetchAllPackagesAdmin, deletePackage } from '../../../api/api';
+import { fixMediaUrl } from '../../../api/api';
 import PackageForm from './PackageForm';
 
 const PackageManagement = () => {
@@ -84,7 +85,7 @@ const PackageManagement = () => {
                   <tr key={pkg._id} className="hover:bg-white/[0.02] transition-colors">
                     <td className="px-6 py-4">
                       <div className="w-16 h-12 rounded-lg overflow-hidden border border-white/[0.06]">
-                        <img src={pkg.images?.[0]} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=200&auto=format&fit=crop'; }} />
+                        <img src={fixMediaUrl(pkg.images?.[0])} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=200&auto=format&fit=crop'; }} />
                       </div>
                     </td>
                     <td className="px-6 py-4">

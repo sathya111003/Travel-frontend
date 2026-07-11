@@ -5,6 +5,15 @@ const API = axios.create({
     // baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api'
 });
 
+// Fix mixed content: convert http:// backend URLs to https://
+export const fixMediaUrl = (url) => {
+    if (!url) return url;
+    if (url.startsWith('http://travel-backend-final.onrender.com')) {
+        return url.replace('http://', 'https://');
+    }
+    return url;
+};
+
 // Add a request interceptor for tokens
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('userInfo')) {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { fetchRecentTours } from '../../api/api';
+import { fetchRecentTours, fixMediaUrl } from '../../api/api';
 import { Clock, Image as ImageIcon, Video, Music } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -73,7 +73,7 @@ const RecentTours = ({ title = "Our Recent Tours", subtitle = "Take a look at so
                 >
                   <div className="relative h-72 overflow-hidden block">
                     <img 
-                      src={tour.image} 
+                      src={fixMediaUrl(tour.image)} 
                       alt={tour.title} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                       onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800&auto=format&fit=crop'; }}
@@ -109,12 +109,12 @@ const RecentTours = ({ title = "Our Recent Tours", subtitle = "Take a look at so
                       <span className="text-[10px] uppercase font-bold tracking-widest text-text/30">Completed Adventure</span>
                       <div className="flex items-center space-x-3">
                         {tour.audioUrl && (
-                          <button onClick={(e) => { e.stopPropagation(); window.open(tour.audioUrl, '_blank'); }} className="text-primary hover:text-[#F97316] transition-colors" title="Listen to Audio">
+                          <button onClick={(e) => { e.stopPropagation(); window.open(fixMediaUrl(tour.audioUrl), '_blank'); }} className="text-primary hover:text-[#F97316] transition-colors" title="Listen to Audio">
                             <Music size={18} />
                           </button>
                         )}
                         {tour.videoUrl && (
-                          <button onClick={(e) => { e.stopPropagation(); window.open(tour.videoUrl, '_blank'); }} className="text-primary hover:text-[#F97316] transition-colors" title="Watch Video">
+                          <button onClick={(e) => { e.stopPropagation(); window.open(fixMediaUrl(tour.videoUrl), '_blank'); }} className="text-primary hover:text-[#F97316] transition-colors" title="Watch Video">
                             <Video size={18} />
                           </button>
                         )}

@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Clock, MapPin, Star } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { fixMediaUrl } from '../../api/api';
 
 const PackageCard = ({ pkg }) => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const PackageCard = ({ pkg }) => {
     >
       <div className="relative h-64 overflow-hidden">
         <img
-          src={pkg.images && pkg.images[0] ? pkg.images[0] : 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop'}
+          src={fixMediaUrl(pkg.images && pkg.images[0] ? pkg.images[0] : 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop')}
           alt={pkg.title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=2070&auto=format&fit=crop'; }}

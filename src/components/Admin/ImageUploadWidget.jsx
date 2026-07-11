@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Upload, Image as ImageIcon, Trash2, AlertCircle } from 'lucide-react';
-import { uploadImage } from '../../api/api';
+import { uploadImage, fixMediaUrl } from '../../api/api';
 
 const ImageUploadWidget = ({ label, value, onChange, placeholder = "https://images.unsplash.com/...", onRemove }) => {
   const [uploading, setUploading] = useState(false);
@@ -24,7 +24,7 @@ const ImageUploadWidget = ({ label, value, onChange, placeholder = "https://imag
       <div className="flex items-center gap-3 bg-white/[0.02] p-3 rounded-xl border border-white/[0.06] hover:border-white/[0.1] transition-all">
         <div className="w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-white/[0.06] bg-background flex items-center justify-center">
           {value ? (
-            <img src={value} alt="Preview" className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=200&auto=format&fit=crop'; }} />
+            <img src={fixMediaUrl(value)} alt="Preview" className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=200&auto=format&fit=crop'; }} />
           ) : (
             <ImageIcon className="text-white/30 w-6 h-6" />
           )}

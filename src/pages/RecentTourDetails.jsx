@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Clock, Music, Video as VideoIcon } from 'lucide-react';
 import { fetchRecentTourById } from '../api/api';
+import { fixMediaUrl } from '../api/api';
 
 const RecentTourDetails = () => {
   const { id } = useParams();
@@ -58,7 +59,7 @@ const RecentTourDetails = () => {
           {/* Main Image */}
           <div className="relative h-[40vh] md:h-[60vh] w-full bg-black/20">
             <img 
-              src={activeImage || tour.image} 
+              src={fixMediaUrl(activeImage || tour.image)} 
               alt={tour.title} 
               className="w-full h-full object-cover transition-all duration-300"
               onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800&auto=format&fit=crop'; }}
@@ -91,7 +92,7 @@ const RecentTourDetails = () => {
                     activeImage === img ? 'border-primary scale-105 shadow-lg shadow-primary/20' : 'border-white/5 hover:border-white/25'
                   }`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=200&auto=format&fit=crop'; }} />
+                  <img src={fixMediaUrl(img)} alt="" className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=200&auto=format&fit=crop'; }} />
                 </button>
               ))}
             </div>
@@ -123,13 +124,14 @@ const RecentTourDetails = () => {
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {(tour.videoUrls && tour.videoUrls.length > 0 ? tour.videoUrls : [tour.videoUrl]).map((videoUrl, vIdx) => {
-                          if (!videoUrl) return null;
+                          const fixedUrl = fixMediaUrl(videoUrl);
+                          if (!fixedUrl) return null;
                           return (
                             <div key={vIdx} className="space-y-2">
                               <div className="rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-black aspect-video relative">
-                                {videoUrl.includes('youtube') || videoUrl.includes('vimeo') ? (
+                                {fixedUrl.includes('youtube') || fixedUrl.includes('vimeo') ? (
                                   <iframe 
-                                    src={videoUrl} 
+                                    src={fixedUrl} 
                                     className="w-full h-full"
                                     frameBorder="0" 
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -142,7 +144,7 @@ const RecentTourDetails = () => {
                                     preload="metadata"
                                     className="w-full h-full object-contain relative z-10 pointer-events-auto cursor-pointer"
                                   >
-                                    <source src={videoUrl} />
+                                    <source src={fixedUrl} />
                                     Your browser does not support the video tag.
                                   </video>
                                 )}
@@ -169,7 +171,7 @@ const RecentTourDetails = () => {
                           <Music className="w-10 h-10 text-[#F97316]" />
                         </div>
                         <audio 
-                          src={tour.audioUrl} 
+                          src={fixMediaUrl(tour.audioUrl)} 
                           controls 
                           className="w-full max-w-sm rounded-full"
                         ></audio>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Plus, Trash2, Clock, Type, FileText, Video, Music, Upload, X, Play, Edit2 } from 'lucide-react';
-import { fetchRecentTours, createRecentTour, updateRecentTour, deleteRecentTour, uploadVideo, uploadAudio, fetchPackages } from '../../../api/api';
+import { fetchRecentTours, createRecentTour, updateRecentTour, deleteRecentTour, uploadVideo, uploadAudio, fetchPackages, fixMediaUrl } from '../../../api/api';
 import ImageUploadWidget from '../ImageUploadWidget';
 
 const MediaUploadWidget = ({ label, value, onChange, accept, icon: Icon, color, uploadFn, placeholder }) => {
@@ -48,7 +48,7 @@ const MediaUploadWidget = ({ label, value, onChange, accept, icon: Icon, color, 
       </div>
       {value && accept === 'video/*' && (
         <div className="mt-2 rounded-xl overflow-hidden border border-white/[0.06] bg-black max-w-xs">
-          <video src={value} controls className="w-full h-auto max-h-36 object-contain" />
+          <video src={value} controls className="w-full h-auto max-h-36 object-contain" onError={(e) => { e.target.poster = ''; }} />
         </div>
       )}
       {value && accept === 'audio/*' && (
@@ -256,7 +256,7 @@ const RecentTourManagement = () => {
           {tours.map((t) => (
             <div key={t._id} className="bg-card p-5 rounded-2xl border border-white/[0.06] flex gap-4">
               <div className="w-24 h-24 rounded-xl overflow-hidden shrink-0 border border-white/[0.06]">
-                <img src={t.image} alt="" className="w-full h-full object-cover" />
+                <img src={fixMediaUrl(t.image)} alt="" className="w-full h-full object-cover" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex justify-between items-start gap-2">

@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import { fixMediaUrl } from '../api/api';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -105,7 +106,7 @@ const PackageDetails = () => {
               <SlickSlider {...sliderSettings}>
                 {pkg.images && pkg.images.length > 0 ? pkg.images.map((img, i) => (
                   <div key={i} className="h-[500px] md:h-[650px] relative">
-                    <img src={img} alt={pkg.title} className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800&auto=format&fit=crop'; }} />
+                    <img src={fixMediaUrl(img)} alt={pkg.title} className="w-full h-full object-cover" onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800&auto=format&fit=crop'; }} />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/60 to-transparent"></div>
                   </div>
                 )) : (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchDestinations } from '../../api/api';
+import { fixMediaUrl } from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 import { MapPin, ChevronRight, ArrowLeft, Globe, Map } from 'lucide-react';
 
@@ -128,7 +129,7 @@ const Destinations = () => {
                     className="relative h-[28rem] rounded-[2.5rem] overflow-hidden group cursor-pointer shadow-2xl"
                   >
                     <img 
-                      src={city.image} 
+                      src={fixMediaUrl(city.image)} 
                       alt={city.name} 
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       onError={(e) => { e.target.onerror = null; e.target.src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=800&auto=format&fit=crop'; }}
