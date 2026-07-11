@@ -10,7 +10,7 @@ const AdminLayout = () => {
   useEffect(() => {
     const userInfo = localStorage.getItem('userInfo');
     if (!userInfo) {
-      navigate('/login');
+      navigate('/admin/login');
       return;
     }
     const user = JSON.parse(userInfo);

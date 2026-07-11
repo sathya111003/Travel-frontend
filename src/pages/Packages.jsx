@@ -84,7 +84,7 @@ const Packages = () => {
               className="w-full bg-card/50 border border-white/5 rounded-2xl py-5 pl-16 pr-8 outline-none focus:border-primary/50 transition-all backdrop-blur-xl"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && navigate(`/packages?keyword=${searchTerm}`)}
+              onKeyDown={(e) => e.key === 'Enter' && navigate(`/packages?keyword=${searchTerm}`)}
             />
           </div>
         </div>

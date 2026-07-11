@@ -4,6 +4,7 @@ import {
   LayoutDashboard, Package, CalendarCheck, Users, MessageSquare,
   LogOut, Compass, Menu, ShieldCheck, X
 } from 'lucide-react';
+import logo from '../../../assets/logo.PNG';
 
 const AdminSidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
@@ -21,7 +22,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('userInfo');
-    navigate('/login');
+    navigate('/admin/login');
   };
 
   return (
@@ -31,7 +32,7 @@ const AdminSidebar = ({ isOpen, onClose }) => {
       <aside className={`fixed left-0 top-0 h-full w-64 bg-card border-r border-white/[0.06] flex flex-col z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0`}>
         <div className="p-6 border-b border-white/[0.06] flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <img src="/src/assets/logo.PNG" alt="Ravana Holidays" className="h-10 w-auto object-contain" />
+            <img src={logo} alt="Ravana Holidays" className="h-10 w-auto object-contain" />
             <div className="flex items-center space-x-1.5">
               <ShieldCheck className="text-primary w-4 h-4" />
               <span className="text-xs font-bold tracking-widest uppercase text-white/60">Admin</span>

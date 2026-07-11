@@ -93,7 +93,7 @@ const Home = () => {
               className="bg-transparent text-lg font-bold outline-none w-full placeholder:text-white/50"
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
             />
           </div>
           <div className="hidden md:block w-px h-10 bg-white/[0.06]" />
